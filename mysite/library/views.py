@@ -1,9 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-
-# Create your views here.
-# def index(request):
-#     return HttpResponse("<h1>Labas, pasauli!!</h1>")
+from .models import Book, BookInstance, Author
 
 def index(request):
-    return render(request, template_name="index.html")
+    context = {
+        'num_books': Book.objects.count(),
+        'num_instances': BookInstance.objects.count(),
+        'num_instances_available': BookInstance.objects.filter(status='a').count(),
+        'authors': Author.objects.count(),
+    }
+    return render(request, template_name="index.html", context=context)
