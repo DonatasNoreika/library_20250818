@@ -8,4 +8,10 @@
     <li><strong>Pavardė: </strong>{{ author.last_name }}</li>
 </ul>
 <p>{{ author.description }}</p>
+<h3>Autoriaus knygos:</h3>
+{% for book in author.books.all %}
+<p>{{ book.title }}</p>
+{% empty %}
+<p>Knygų nėra</p>
+{% endfor %}
 {% endblock %}
