@@ -51,7 +51,7 @@ class Book(models.Model):
 
 class BookInstance(models.Model):
     uuid = models.UUIDField(verbose_name="UUID Code", default=uuid.uuid4)
-    book = models.ForeignKey(to="Book", verbose_name="Book", on_delete=models.CASCADE)
+    book = models.ForeignKey(to="Book", verbose_name="Book", on_delete=models.CASCADE, related_name="instances")
     due_back = models.DateField(verbose_name="Due Back", null=True, blank=True)
 
     LOAN_STATUS = (

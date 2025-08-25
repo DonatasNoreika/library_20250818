@@ -10,4 +10,12 @@
     <li><strong>Žanras: </strong>{{ book.display_genre }}</li>
 </ul>
 <p>{{ book.summary }}</p>
+<h3>Kopijos</h3>
+{% for instance in book.instances.all %}
+<hr>
+<p class="{% if instance.status == 't' %}text-danger{% elif instance.status == 'a' %}text-success{% endif %}">{{ instance.get_status_display }}</p>
+<small>{{ instance.uuid }} - {{ instance.due_back }}</small>
+{% empty %}
+<p>Kopijų nėra</p>
+{% endfor %}
 {% endblock %}
