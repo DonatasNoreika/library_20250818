@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block "title" %}Autorius{% endblock %}
+
+{% block "content" %}
+<ul>
+    <li><strong>Vardas: </strong>{{ author.first_name }}</li>
+    <li><strong>Pavardė: </strong>{{ author.last_name }}</li>
+</ul>
+<p>{{ author.description }}</p>
+{% endblock %}
