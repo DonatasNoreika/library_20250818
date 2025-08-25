@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Book, BookInstance, Author
 from django.views import generic
 
+
 def index(request):
     context = {
         'num_books': Book.objects.count(),
@@ -31,3 +32,8 @@ class BookListView(generic.ListView):
     template_name = 'books.html'
     context_object_name = 'books'
 
+
+class BookDetailView(generic.DetailView):
+    model = Book
+    template_name = "book.html"
+    context_object_name = 'book'
