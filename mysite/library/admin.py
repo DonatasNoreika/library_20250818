@@ -19,7 +19,7 @@ class BookAdmin(admin.ModelAdmin):
     inlines = [BookInstanceInLine]
 
     fieldsets = [
-        ('General', {'fields': ('pk', 'title', 'isbn', 'author', 'genre', 'display_genre')}),
+        ('General', {'fields': ('pk', 'title', 'isbn', 'author', 'genre', 'cover', 'display_genre')}),
     ]
 
 class BookInstanceAdmin(admin.ModelAdmin):
