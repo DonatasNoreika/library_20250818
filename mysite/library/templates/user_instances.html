@@ -4,6 +4,6 @@
 
 {% block "content" %}
 {% for instance in instances %}
-<p>{{ instance }}</p>
+<p>{{ instance }} - <span class="{% if instance.is_overdue %}text-danger{% endif %}">{{ instance.due_back }}</span></p>
 {% endfor %}
 {% endblock %}

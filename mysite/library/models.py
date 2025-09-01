@@ -1,6 +1,7 @@
 from django.db import models
 import uuid
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
 class Genre(models.Model):
@@ -65,6 +66,9 @@ class BookInstance(models.Model):
     )
 
     status = models.CharField(verbose_name="Status", choices=LOAN_STATUS, max_length=1, blank=True, default='d')
+
+    def is_overdue(self):
+        return self.due_back and self.due_back < timezone.now().date()
 
     def __str__(self):
         return f"{self.book.title} ({self.uuid})"
