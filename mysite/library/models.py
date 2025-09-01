@@ -1,5 +1,6 @@
 from django.db import models
 import uuid
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Genre(models.Model):
@@ -54,6 +55,7 @@ class BookInstance(models.Model):
     uuid = models.UUIDField(verbose_name="UUID Code", default=uuid.uuid4)
     book = models.ForeignKey(to="Book", verbose_name="Book", on_delete=models.CASCADE, related_name="instances")
     due_back = models.DateField(verbose_name="Due Back", null=True, blank=True)
+    reader = models.ForeignKey(to=User, verbose_name="Reader", on_delete=models.SET_NULL, null=True, blank=True)
 
     LOAN_STATUS = (
         ('d', 'Administered'),

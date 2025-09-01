@@ -11,7 +11,7 @@ class BookInstanceInLine(admin.TabularInline):
     extra = 0
     can_delete = False
     readonly_fields = ['uuid']
-    fields = ['uuid', 'due_back', 'status']
+    fields = ['uuid', 'due_back', 'status', 'reader']
 
 class BookAdmin(admin.ModelAdmin):
     list_display = ['pk', 'title', 'isbn', 'author', 'display_genre']
@@ -23,14 +23,14 @@ class BookAdmin(admin.ModelAdmin):
     ]
 
 class BookInstanceAdmin(admin.ModelAdmin):
-    list_display = ['uuid', 'book', 'due_back', 'status']
-    list_filter = ['book', 'status', 'due_back']
-    list_editable = ['due_back', 'status']
+    list_display = ['uuid', 'book', 'due_back', 'status', 'reader']
+    list_filter = ['book', 'status', 'due_back', 'reader']
+    list_editable = ['due_back', 'status', 'reader']
     search_fields = ['uuid', 'book__title', 'book__author__first_name']
 
     fieldsets = [
         ('General', {'fields': ('uuid', 'book')}),
-        ('Availability', {'fields': ('status', 'due_back')}),
+        ('Availability', {'fields': ('status', 'due_back', 'reader')}),
     ]
 
 admin.site.register(Genre)
