@@ -2,6 +2,7 @@ from django.db import models
 import uuid
 from django.contrib.auth.models import User
 from django.utils import timezone
+from tinymce.models import HTMLField
 
 # Create your models here.
 class Genre(models.Model):
@@ -17,7 +18,7 @@ class Genre(models.Model):
 class Author(models.Model):
     first_name = models.CharField(verbose_name="First Name", max_length=100)
     last_name = models.CharField(verbose_name="Last Name", max_length=100)
-    description = models.TextField(verbose_name="Description", max_length=2000, null=True, blank=True)
+    description = HTMLField(verbose_name="Description", max_length=2000, null=True, blank=True)
 
     def display_books(self):
         return ", ".join(book.title for book in self.books.all())
@@ -31,7 +32,7 @@ class Author(models.Model):
 
 class Book(models.Model):
     title = models.CharField(verbose_name="Title", max_length=100)
-    summary = models.TextField(verbose_name="Summary", max_length=2000)
+    summary = HTMLField(verbose_name="Summary", max_length=2000)
     isbn =  models.IntegerField(verbose_name="ISBN Number")
     author = models.ForeignKey(to="Author", verbose_name="Author", on_delete=models.SET_NULL, null=True, blank=True, related_name="books")
     genre = models.ManyToManyField(to="Genre", verbose_name="Genres")

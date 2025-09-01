@@ -12,7 +12,7 @@
     <li><strong>ISBN: </strong>{{ book.isbn }}</li>
     <li><strong>Žanras: </strong>{{ book.display_genre }}</li>
 </ul>
-<p>{{ book.summary }}</p>
+<p>{{ book.summary|safe }}</p>
 <h3>Kopijos</h3>
 {% for instance in book.instances.all %}
 <hr>
