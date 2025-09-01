@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Book, BookInstance, Author
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
 
@@ -55,3 +56,14 @@ class BookDetailView(generic.DetailView):
     model = Book
     template_name = "book.html"
     context_object_name = 'book'
+
+
+class UserBookInstanceListView(LoginRequiredMixin, generic.ListView):
+    model = BookInstance
+    template_name = 'user_instances.html'
+    context_object_name = 'instances'
+    # queryset =
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(reader=self.request.user)
+
