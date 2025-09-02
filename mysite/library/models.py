@@ -77,3 +77,18 @@ class BookInstance(models.Model):
     class Meta:
         verbose_name = "Knygos kopija"
         verbose_name_plural = "Knygų kopijos"
+
+
+class BookReview(models.Model):
+    book = models.ForeignKey(to="Book", verbose_name="Book", on_delete=models.CASCADE, related_name='reviews')
+    author = models.ForeignKey(to=User, verbose_name="Author", on_delete=models.SET_NULL, null=True, blank=True)
+    content = models.TextField(verbose_name="Content")
+    date_created = models.DateTimeField(verbose_name="Date Created", auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.author} - {self.book}({self.date_created})"
+
+    class Meta:
+        ordering = ['-date_created']
+        verbose_name = "Knygos komentaras"
+        verbose_name_plural = "Knygos komentarai"

@@ -13,6 +13,14 @@
     <li><strong>Žanras: </strong>{{ book.display_genre }}</li>
 </ul>
 <p>{{ book.summary|safe }}</p>
+<h3>Komentarai</h3>
+{% for review in book.reviews.all %}
+<hr>
+<small>{{ review.author }}, {{ review.date_created }}</small>
+<p>{{ review.content }}</p>
+{% empty %}
+<p>Komentarų nėra</p>
+{% endfor %}
 <h3>Kopijos</h3>
 {% for instance in book.instances.all %}
 <hr>
