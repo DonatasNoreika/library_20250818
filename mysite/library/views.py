@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, reverse
 from .models import Book, BookInstance, Author
 from django.views import generic
@@ -95,3 +96,7 @@ class SignUpView(generic.CreateView):
     form_class = UserCreationForm
     template_name = "signup.html"
     success_url = reverse_lazy('login')
+
+@login_required
+def profile(request):
+    return render(request, template_name="profile.html")

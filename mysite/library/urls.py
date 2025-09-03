@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, authors, author, search
+from .views import index, authors, author, search, profile
 from .views import BookListView, BookDetailView, UserBookInstanceListView, SignUpView
 
 urlpatterns = [
@@ -11,4 +11,5 @@ urlpatterns = [
     path('search/', search, name='search'),
     path('userinstances/', UserBookInstanceListView.as_view(), name='user_instances'),
     path('signup/', SignUpView.as_view(), name='signup'),
+    path('profile/', profile, name="profile")
 ]
