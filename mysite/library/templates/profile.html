@@ -3,11 +3,15 @@
 {% block "title" %}Profilis{% endblock %}
 
 {% block "content" %}
+{% if user.photo %}
+<img class="rounded-circle account-img" style="width: 300px" src="{{ user.photo.url }}">
+{% endif %}
 <p><strong>Vartotojo vardas: </strong>{{ user.username }}</p>
 <p><strong>Vardas: </strong>{{ user.first_name }}</p>
 <p><strong>Pavardė: </strong>{{ user.last_name }}</p>
 <p><strong>El. pašto adresas: </strong>{{ user.email }}</p>
-<form method="post">
+<p><strong>Vieta: </strong>{{ user.location }}</p>
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% load crispy_forms_tags %}
     {{ form | crispy }}

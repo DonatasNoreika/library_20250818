@@ -24,6 +24,7 @@
 {% endif %}
 {% for review in book.reviews.all %}
 <hr>
+<img class="rounded-circle account-img" width="30px" src="{{ review.author.photo.url }}">
 <small>{{ review.author }}, {{ review.date_created }}</small>
 <p>{{ review.content }}</p>
 {% empty %}

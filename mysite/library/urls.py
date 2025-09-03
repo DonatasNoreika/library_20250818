@@ -4,7 +4,8 @@ from .views import (BookListView,
                     BookDetailView,
                     UserBookInstanceListView,
                     ProfileUpdateView,
-                    SignUpView)
+                    SignUpView,
+                    )
 
 urlpatterns = [
     path('', index, name='index'),

@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, reverse
-from .models import Book, BookInstance, Author
+from .models import Book, BookInstance, Author, CustomUser
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import FormMixin
@@ -8,7 +8,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.urls import reverse_lazy
-from .forms import BookReviewForm
+from .forms import BookReviewForm, CustomUserCreationForm
 from django.contrib.auth.models import User
 
 def index(request):
@@ -94,17 +94,17 @@ class UserBookInstanceListView(LoginRequiredMixin, generic.ListView):
 
 
 class SignUpView(generic.CreateView):
-    form_class = UserCreationForm
+    form_class = CustomUserCreationForm
     template_name = "signup.html"
     success_url = reverse_lazy('login')
 
-# @login_required
-# def profile(request):
-#     return render(request, template_name="profile.html")
+@login_required
+def profile(request):
+    return render(request, template_name="profile.html")
 
 class ProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
-    model = User
-    fields = ['first_name', 'last_name', 'email']
+    model = CustomUser
+    fields = ['first_name', 'last_name', 'email', 'photo', 'location']
     template_name = "profile.html"
     success_url = reverse_lazy('profile')
 

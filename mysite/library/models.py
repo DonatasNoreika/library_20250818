@@ -1,8 +1,14 @@
 from django.db import models
 import uuid
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser, UserManager
 from django.utils import timezone
 from tinymce.models import HTMLField
+
+
+class CustomUser(AbstractUser):
+    photo = models.ImageField(verbose_name="Photo", upload_to="profile_pics", null=True, blank=True)
+    location = models.TextField(verbose_name="Location")
+
 
 # Create your models here.
 class Genre(models.Model):
@@ -57,7 +63,7 @@ class BookInstance(models.Model):
     uuid = models.UUIDField(verbose_name="UUID Code", default=uuid.uuid4)
     book = models.ForeignKey(to="Book", verbose_name="Book", on_delete=models.CASCADE, related_name="instances")
     due_back = models.DateField(verbose_name="Due Back", null=True, blank=True)
-    reader = models.ForeignKey(to=User, verbose_name="Reader", on_delete=models.SET_NULL, null=True, blank=True)
+    reader = models.ForeignKey(to="library.CustomUser", verbose_name="Reader", on_delete=models.SET_NULL, null=True, blank=True)
 
     LOAN_STATUS = (
         ('d', 'Administered'),
@@ -81,7 +87,7 @@ class BookInstance(models.Model):
 
 class BookReview(models.Model):
     book = models.ForeignKey(to="Book", verbose_name="Book", on_delete=models.CASCADE, related_name='reviews')
-    author = models.ForeignKey(to=User, verbose_name="Author", on_delete=models.SET_NULL, null=True, blank=True)
+    author = models.ForeignKey(to="library.CustomUser", verbose_name="Author", on_delete=models.SET_NULL, null=True, blank=True)
     content = models.TextField(verbose_name="Content")
     date_created = models.DateTimeField(verbose_name="Date Created", auto_now_add=True)
 

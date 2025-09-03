@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Genre, Author, Book, BookInstance, BookReview
+from .models import Genre, Author, Book, BookInstance, BookReview, CustomUser
+from django.contrib.auth.admin import UserAdmin
 
 # Register your models here.
 
@@ -33,6 +34,7 @@ class BookInstanceAdmin(admin.ModelAdmin):
         ('Availability', {'fields': ('status', 'due_back', 'reader')}),
     ]
 
+admin.site.register(CustomUser, UserAdmin)
 admin.site.register(Genre)
 admin.site.register(Author, AuthorAdmin)
 admin.site.register(Book, BookAdmin)
