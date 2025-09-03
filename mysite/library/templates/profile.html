@@ -7,4 +7,10 @@
 <p><strong>Vardas: </strong>{{ user.first_name }}</p>
 <p><strong>Pavardė: </strong>{{ user.last_name }}</p>
 <p><strong>El. pašto adresas: </strong>{{ user.email }}</p>
+<form method="post">
+    {% csrf_token %}
+    {% load crispy_forms_tags %}
+    {{ form | crispy }}
+    <button type="submit" class="btn btn-primary">Atnaujinti</button>
+</form>
 {% endblock %}

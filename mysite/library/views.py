@@ -6,9 +6,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import FormMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.urls import reverse_lazy
 from .forms import BookReviewForm
+from django.contrib.auth.models import User
 
 def index(request):
     num_visits = request.session.get('num_visits', 1)
@@ -97,6 +98,15 @@ class SignUpView(generic.CreateView):
     template_name = "signup.html"
     success_url = reverse_lazy('login')
 
-@login_required
-def profile(request):
-    return render(request, template_name="profile.html")
+# @login_required
+# def profile(request):
+#     return render(request, template_name="profile.html")
+
+class ProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = User
+    fields = ['first_name', 'last_name', 'email']
+    template_name = "profile.html"
+    success_url = reverse_lazy('profile')
+
+    def get_object(self, queryset=None):
+        return self.request.user
