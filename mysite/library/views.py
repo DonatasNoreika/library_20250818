@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, reverse
 from .models import Book, BookInstance, Author, CustomUser
 from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic.edit import FormMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -10,6 +10,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.urls import reverse_lazy
 from .forms import BookReviewForm, CustomUserCreationForm
 from django.contrib.auth.models import User
+
 
 def index(request):
     num_visits = request.session.get('num_visits', 1)
@@ -46,10 +47,13 @@ def search(request):
     query = request.GET.get('query')
     context = {
         'query': query,
-        'books': Book.objects.filter(Q(title__icontains=query) | Q(summary__icontains=query) | Q(author__first_name__icontains=query) | Q(author__last_name__icontains=query)),
+        'books': Book.objects.filter(
+            Q(title__icontains=query) | Q(summary__icontains=query) | Q(author__first_name__icontains=query) | Q(
+                author__last_name__icontains=query)),
         'authors': Author.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query)),
     }
     return render(request, template_name='search.html', context=context)
+
 
 class BookListView(generic.ListView):
     model = Book
@@ -63,6 +67,7 @@ class BookDetailView(FormMixin, generic.DetailView):
     template_name = "book.html"
     context_object_name = 'book'
     form_class = BookReviewForm
+
     # success_url = reverse_lazy('books')
 
     def get_success_url(self):
@@ -87,6 +92,7 @@ class UserBookInstanceListView(LoginRequiredMixin, generic.ListView):
     model = BookInstance
     template_name = 'user_instances.html'
     context_object_name = 'instances'
+
     # queryset =
 
     def get_queryset(self):
@@ -98,9 +104,11 @@ class SignUpView(generic.CreateView):
     template_name = "signup.html"
     success_url = reverse_lazy('login')
 
+
 @login_required
 def profile(request):
     return render(request, template_name="profile.html")
+
 
 class ProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = CustomUser
@@ -110,3 +118,13 @@ class ProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class BookInstanceListView(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
+    model = BookInstance
+    template_name = "instances.html"
+    context_object_name = "instances"
+
+    def test_func(self):
+        return self.request.user.is_staff
+
