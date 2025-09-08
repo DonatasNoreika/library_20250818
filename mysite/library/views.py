@@ -10,6 +10,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.urls import reverse_lazy
 from .forms import BookReviewForm, CustomUserCreationForm
 from django.contrib.auth.models import User
+from django.urls import reverse_lazy
 
 
 def index(request):
@@ -133,6 +134,16 @@ class BookInstanceDetailView(LoginRequiredMixin, UserPassesTestMixin, generic.De
     model = BookInstance
     template_name = "instance.html"
     context_object_name = "instance"
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+
+class BookInstanceCreateView(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView):
+    model = BookInstance
+    template_name = 'instance_form.html'
+    fields = ['book', 'due_back', 'reader', 'status']
+    success_url = reverse_lazy('instances')
 
     def test_func(self):
         return self.request.user.is_staff

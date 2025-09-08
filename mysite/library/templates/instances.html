@@ -3,6 +3,7 @@
 {% block "title" %}Knygų Egzemplioriai{% endblock %}
 
 {% block "content" %}
+<a class="btn btn-secondary mb-2" href="{% url 'instances_create' %}">Naujas Egzempliorius</a>
 {% for instance in instances %}
 <p><a href="{% url 'instance' instance.pk %}">{{ instance }}</a></p>
 {% endfor %}

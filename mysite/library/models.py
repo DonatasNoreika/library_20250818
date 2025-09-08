@@ -96,6 +96,7 @@ class BookInstance(models.Model):
     class Meta:
         verbose_name = "Knygos kopija"
         verbose_name_plural = "Knygų kopijos"
+        ordering = ['-pk']
 
 
 class BookReview(models.Model):
