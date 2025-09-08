@@ -8,7 +8,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.urls import reverse_lazy
-from .forms import BookReviewForm, CustomUserCreationForm
+from .forms import BookReviewForm, CustomUserCreationForm, BookInstanceCreateUpdateForm
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 
@@ -142,7 +142,8 @@ class BookInstanceDetailView(LoginRequiredMixin, UserPassesTestMixin, generic.De
 class BookInstanceCreateView(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView):
     model = BookInstance
     template_name = 'instance_form.html'
-    fields = ['book', 'due_back', 'reader', 'status']
+    # fields = ['book', 'due_back', 'reader', 'status']
+    form_class = BookInstanceCreateUpdateForm
     success_url = reverse_lazy('instances')
 
     def test_func(self):
