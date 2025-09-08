@@ -160,3 +160,15 @@ class BookInstanceUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.Up
 
     def test_func(self):
         return self.request.user.is_staff
+
+
+class BookInstanceDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
+    model = BookInstance
+    template_name = "instance_delete.html"
+    context_object_name = "instance"
+
+    def get_success_url(self):
+        return reverse('instances')
+
+    def test_func(self):
+        return self.request.user.is_staff

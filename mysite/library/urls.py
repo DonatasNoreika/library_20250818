@@ -8,7 +8,8 @@ from .views import (BookListView,
                     BookInstanceListView,
                     BookInstanceDetailView,
                     BookInstanceCreateView,
-                    BookInstanceUpdateView)
+                    BookInstanceUpdateView,
+                    BookInstanceDeleteView)
 
 urlpatterns = [
     path('', index, name='index'),
@@ -24,4 +25,5 @@ urlpatterns = [
     path('instances/<int:pk>', BookInstanceDetailView.as_view(), name="instance"),
     path('instances/create', BookInstanceCreateView.as_view(), name='instances_create'),
     path('instances/<int:pk>/update', BookInstanceUpdateView.as_view(), name="instance_update"),
+    path('instances/<int:pk>/delete', BookInstanceDeleteView.as_view(), name="instance_delete"),
 ]
