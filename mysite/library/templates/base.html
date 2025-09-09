@@ -10,10 +10,10 @@
     <link href="{% static 'css/styles.css' %}" rel="stylesheet">
 </head>
 <body>
-
+{% load i18n %}
 <div class="p-5 bg-primary text-white text-center">
-    <h1>Biblioteka</h1>
-    <p>Čia ateiname pasiimti knygų!</p>
+    <h1>{% trans "Library" %}</h1>
+    <p>{% trans "Demo Program" %}</p>
 </div>
 
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
@@ -24,13 +24,13 @@
         <div class="collapse navbar-collapse" id="mynavbar">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'index' %}">PRADŽIA</a>
+                    <a class="nav-link" href="{% url 'index' %}">{% trans "HOME" %}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'authors' %}">Autoriai</a>
+                    <a class="nav-link" href="{% url 'authors' %}">{% trans "Authors" %}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'books' %}">Knygos</a>
+                    <a class="nav-link" href="{% url 'books' %}">{% trans "Books" %}</a>
                 </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">
@@ -42,30 +42,30 @@
                     </svg>
                     {{ user.get_username }}</a></li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'user_instances' %}">Mano knygos</a>
+                    <a class="nav-link" href="{% url 'user_instances' %}">{% trans "My Books" %}</a>
                 </li>
                 {% if user.is_staff %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'instances' %}">Administravimas</a>
+                    <a class="nav-link" href="{% url 'instances' %}">{% trans "Administration" %}</a>
                 </li>
                 {% endif %}
                 <li class="nav-item">
                     <form method="post" action="{% url 'logout' %}">
                         {% csrf_token %}
-                        <button type="submit" class="nav-link">Atsijungti</button>
+                        <button type="submit" class="nav-link">{% trans "Logout" %}</button>
                     </form>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'signup' %}">Registruotis</a>
+                    <a class="nav-link" href="{% url 'signup' %}">{% trans "SignUp" %}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Prisijungti</a>
+                    <a class="nav-link" href="{% url 'login' %}">{% trans "Login" %}</a>
                 </li>
                 {% endif %}
             </ul>
             <form class="d-flex" method="get" action="{% url 'search' %}">
-                <input class="form-control me-2" type="text" name='query' placeholder="Ieškoti">
+                <input class="form-control me-2" type="text" name='query' placeholder='{% trans "Search" %}'>
             </form>
         </div>
     </div>
@@ -80,7 +80,7 @@
 </div>
 
 <div class="mt-5 p-4 bg-dark text-white text-center">
-    <p>2025 Mūsų biblioteka</p>
+    <p>2025 {% trans "Our Library" %}</p>
 </div>
 
 </body>
